@@ -1,8 +1,3 @@
-#!/bin/bash
-#
-# 最终解决方案 - 全功能一体化开发脚本 (V8 - 代码内置模式)
-#
-
 # --- helper functions for logging ---
 log_info() { echo -e "\033[1;32m[信息]\033[0m $1"; }
 log_error() { echo -e "\033[1;31m[错误]\033[0m $1"; }
@@ -89,16 +84,16 @@ echo
 
 # --- 5. Pack the files ---
 log_step "正在打包文件..."
-tar -czf led_package.tar.gz ${PACKAGE_DIR}
-log_info "打包成功: led_package.tar.gz"
+tar -czf output/led_package.tar.gz ${PACKAGE_DIR}
+log_info "打包成功: output/led_package.tar.gz"
 echo
 
 # --- Final instructions ---
 separator
-echo -e "\033[1;36m                  所有操作已完成                    \033[0m"
+echo -e "\033[1;36m 所有操作已完成文件已经保存到output目录 \033[0m"
 separator
 echo "程序现已自包含Qtopia控制逻辑。"
-echo "请将 'led_package.tar.gz' 上传到开发板并解压。"
+echo "请将 'led_package.tar.gz' 上传到开发板并解压。"s
 echo "进入 'led_package' 目录，以root权限运行 './start.sh' 即可。"
 echo
 separator 

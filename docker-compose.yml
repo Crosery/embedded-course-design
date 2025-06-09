@@ -1,0 +1,20 @@
+version: '1.0'
+services:
+  # 嵌入式运行环境
+  dev:
+  # 构建环境
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dev
+    # 挂载项目和环境
+    volumes:
+      - ./QT/bin:/app/QT/bin
+      - ./QT/output:/app/QT/output
+      - ./数据库/bin:/app/数据库/bin
+      - ./逆序流水灯/bin:/app/逆序流水灯/bin
+    command: ["/bin/bash", "/app/start.sh"]
+    working_dir: /app
+    # 开启TTY和STDIN
+    tty: true  
+    stdin_open: true  

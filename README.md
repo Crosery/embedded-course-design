@@ -1,6 +1,6 @@
 # 嵌入式课程设计
 
-[![Platform: ARM](https://img.shields.io/badge/Platform-ARM-blue.svg)](https://www.arm.com/)[![Build: CMake](https://img.shields.io/badge/Build-CMake-green.svg)](https://cmake.org/)[![Compiler: GCC 4.5.1](https://img.shields.io/badge/Compiler-GCC%204.5.1-orange.svg)](https://gcc.gnu.org/)[![Framework: Qt 4.7.0](https://img.shields.io/badge/Framework-Qt%204.7.0-41CD52.svg)](https://www.qt.io/)
+[![Platform: ARM](https://img.shields.io/badge/Platform-ARM-blue.svg)](https://www.arm.com/)[![Build: CMake](https://img.shields.io/badge/Build-CMake-green.svg)](https://cmake.org/)[![Compiler: GCC 4.5.1](https://img.shields.io/badge/Compiler-GCC%204.5.1-orange.svg)](https://gcc.gnu.org/)[![Framework: Qt 4.7.0](https://img.shields.io/badge/Framework-Qt%204.7.0-41CD52.svg)](https://www.qt.io/)[![Docker: Supported](https://img.shields.io/badge/Docker-Supported-2496ED.svg)](https://www.docker.com/)
 
 ### 项目概述
 
@@ -61,10 +61,13 @@
 │   ├── qt_libs/         # Qt运行时库
 │   ├── run.sh           # 一体化部署脚本
 │   └── CMakeLists.txt
-└── env/                 # 开发环境
-    ├── toolchain-arm.cmake # ARM工具链配置
-    ├── FriendlyARM/     # ARM交叉编译工具
-    └── QT4.7.0/         # Qt开发环境
+├── env/                 # 开发环境
+│   ├── toolchain-arm.cmake # ARM工具链配置
+│   ├── FriendlyARM/     # ARM交叉编译工具
+│   └── QT4.7.0/         # Qt开发环境
+├── docker-compose.yml   # Docker Compose配置文件
+├── Dockerfile           # Docker镜像构建定义
+└── start.sh             # 交互式编译启动脚本
 ```
 
 ### 硬件要求
@@ -101,9 +104,50 @@
 
 ### 安装指南
 
-#### 1. 环境准备
+env.zip的环境包下载地址 [长江大学课设环境_飞桨AI Studio星河社区](https://aistudio.baidu.com/datasetdetail/342360)
 
-**Ubuntu/Debian系统:**
+下载完解压放进根目录
+
+```bash
+# 解压环境包
+unzip env.zip
+
+# 赋予env文件夹里面的所有可执行程序权限
+sudo chmod -R +x env
+```
+
+#### 1、使用Docker构建项目
+
+1. **克隆项目**
+
+   ```bash
+   git clone <项目仓库地址>
+   cd 项目目录
+   ```
+
+3. **运行Docker容器**
+
+   ```bash
+   docker-compose up -d
+   ```
+
+4. **进入容器交互环境**
+
+   ```bash
+   docker exec -it dev bash
+   ```
+
+4. **在容器内使用start.sh脚本编译项目**
+
+   ```bash
+   ./start.sh
+   ```
+
+
+
+#### 2、 非Docker构建项目
+
+**Ubuntu24.04系统:**
 
 ```bash
 # 更新包管理器
@@ -132,26 +176,12 @@ sudo pacman -S cmake
 sudo pacman -S --needed lib32-glibc lib32-zlib lib32-gcc-libs
 ```
 
-#### 2. 下载环境包
-
-env.zip的环境包下载地址 [长江大学课设环境_飞桨AI Studio星河社区](https://aistudio.baidu.com/datasetdetail/342360)
-
-下载完解压放进根目录
-
-```bash
-# 解压环境包
-unzip env.zip
-
-# 赋予env文件夹里面的所有可执行程序权限
-sudo chmod -R +x env
-```
-
-#### 3. 项目构建
-
 **逆序流水灯项目:**
 
 ```bash
 cd 逆序流水灯
+
+chmod +x ./build_arm.sh
 
 ./build_arm.sh
 ```
@@ -161,6 +191,8 @@ cd 逆序流水灯
 ```bash
 cd 数据库
 
+chmod +x ./build_arm.sh
+
 ./build_arm.sh
 ```
 
@@ -169,10 +201,12 @@ cd 数据库
 ```bash
 cd QT
 
+chmod +x ./run.sh
+
 ./run.sh
 ```
 
-### 使用方法
+### 使用方法（开发板上）
 
 #### 逆序流水灯
 
